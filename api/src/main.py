@@ -5,11 +5,14 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 
 from .core.config import settings
+from .core.caching import init_caching
 
 
 # Lifespan events
 @asynccontextmanager
 async def lifespan(app: FastAPI):  # noqa: F811
+    # Initialize the cache backend
+    init_caching()
     yield
 
 
@@ -35,14 +38,6 @@ app.mount(
 )
 
 # Include routers
-ROUTERS: list[APIRouter] = [
-    user_router,
-    games_router,
-    payments_router,
-    slots_router,
-    chat_router,
-    promo_code_router,
-    bot_router,
-]
+ROUTERS: list[APIRouter] = []
 for router in ROUTERS:
     app.include_router(router, prefix=f"/api/v{settings.app.version}")

@@ -2,9 +2,9 @@ services:
   postgresql:
     image: "postgres:latest"
     restart: always
-    container_name: "gost_bet_postgresql"
+    container_name: "steam_profile_postgresql"
     volumes:
-      - gost_bet_postgresql_data:/var/lib/postgresql/data
+      - steam_profile_postgresql_data:/var/lib/postgresql/data
     env_file:
       - .env.dev
     environment:
@@ -17,15 +17,16 @@ services:
   app:
     build:
       context: .
-    container_name: "gost_bet"
-    hostname: "gost_bet"
+    container_name: "steam_profile_app"
+    hostname: "steam_profile"
     depends_on:
       - postgresql
     ports:
       - "8000:${APP_PORT}"
     volumes:
-      - .:/gost_bet_app/api
-      - ./static:/gost_bet_app/api/static
+      - .:/steam_profile_app/api
+      - ./static:/steam_profile_app/api/static
+      - ./templates:/steam_profile_app/api/templates
     env_file:
       - .env.prod
     environment:
@@ -33,7 +34,7 @@ services:
 
   nginx:
     image: nginx:latest
-    container_name: "gost_bet_nginx"
+    container_name: "steam_profile_nginx"
     build:
       context: ./nginx
     ports:
@@ -47,4 +48,4 @@ services:
       - ./nginx/templates:/etc/nginx/templates
 
 volumes:
-  gost_bet_postgresql_data:
+  steam_profile_postgresql_data:
