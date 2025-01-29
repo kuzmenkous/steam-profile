@@ -1,0 +1,51 @@
+services:
+  postgresql:
+    image: "postgres:latest"
+    restart: always
+    container_name: "gost_bet_postgresql"
+    volumes:
+      - gost_bet_postgresql_data:/var/lib/postgresql/data
+    env_file:
+      - .env.dev
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_HOST: ${DB_HOST}
+      POSTGRES_PORT: ${DB_PORT}
+
+  app:
+    build:
+      context: .
+    container_name: "gost_bet_app"
+    depends_on:
+      - postgresql
+    ports:
+      - "8000:${APP_PORT}"
+    volumes:
+      - .:/gost_bet_app/api
+      - ./static:/gost_bet_app/api/static
+    env_file:
+      - .env.dev
+    environment:
+      MODE: "DEV"
+
+  pg-admin:
+    image: dpage/pgadmin4
+    container_name: gost_bet_admin
+    restart: always
+    depends_on:
+      - postgresql
+    ports:
+      - "82:80"
+    volumes:
+      - gost_bet_pg_admin_data:/var/lib/pgadmin
+    env_file:
+      - .env.dev
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "${PG_ADMIN_EMAIL}"
+      PGADMIN_DEFAULT_PASSWORD: "${PG_ADMIN_PASSWORD}"
+
+volumes:
+  gost_bet_postgresql_data:
+  gost_bet_pg_admin_data:

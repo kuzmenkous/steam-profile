@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "steam-profile-api"
+version = "0.1.0"
+description = "Steam Profile API"
+authors = ["Oleg Kuzmenko <okuzmenko31us@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.13"
+fastapi = "^0.115.7"
+uvicorn = "^0.34.0"
+sqlalchemy = "^2.0.37"
+pydantic-settings = "^2.7.1"
+psycopg = {version = "^3.2.4", extras = ["binary", "pool"]}
+greenlet = "^3.1.1"
+gunicorn = "^23.0.0"
+passlib = "^1.7.4"
+python-jose = "^3.3.0"
+beautifulsoup4 = "^4.12.3"
+lxml = "^5.3.0"
+python-slugify = "^8.0.4"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
