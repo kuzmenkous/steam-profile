@@ -1,0 +1,23 @@
+upstream steam_profile {
+	server gost_bet:${APP_PORT};
+}
+
+server {
+    listen 80;
+    listen 443;
+    listen [::]:443;
+
+    server_name ${APP_DOMAIN};
+
+    location / {
+        proxy_pass http://steam_profile;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+		proxy_set_header X-Forwarded-Proto ${NGINX_FORWARDED_PROTO};
+		proxy_set_header X-Forwarded-Scheme ${NGINX_FORWARDED_SCHEME};
+    }
+}

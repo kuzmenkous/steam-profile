@@ -19,6 +19,9 @@ python-jose = "^3.3.0"
 beautifulsoup4 = "^4.12.3"
 lxml = "^5.3.0"
 python-slugify = "^8.0.4"
+redis = "^5.2.1"
+redis-cli = "^1.0.1"
+alembic = "^1.14.1"
 
 
 [build-system]

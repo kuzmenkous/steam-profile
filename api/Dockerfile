@@ -8,7 +8,7 @@ ENV POETRY_VIRTUALENVS_CREATE 0
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Set the working directory in the container
-WORKDIR /gost_bet_app/api
+WORKDIR /steam_profile_app/api
 
 # Install necessary packages and add the deadsnakes PPA for Python 3.13
 RUN apt-get update && apt-get install -y \
@@ -36,7 +36,7 @@ RUN curl -sSL https://bootstrap.pypa.io/get-pip.py | python3.13
 RUN pip install poetry
 
 # Copy the Python dependencies file and install dependencies with Poetry
-COPY pyproject.toml poetry.lock /gost_bet_app/api/
+COPY pyproject.toml poetry.lock /steam_profile_app/api/
 RUN poetry config virtualenvs.create false \
     && poetry install --no-interaction --no-root -v \
     && rm -rf /root/.cache/pypoetry
@@ -48,9 +48,7 @@ COPY . .
 COPY ./supervisor/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # Make run script executable
-COPY --chmod=765 scripts/run.sh /gost_bet_app/run.sh
-RUN chmod +x /gost_bet_app/run.sh
+COPY --chmod=765 scripts/run.sh /steam_profile_app/run.sh
+RUN chmod +x /steam_profile_app/run.sh
 
-
-
-CMD ["/gost_bet_app/run.sh"]
+CMD ["/steam_profile_app/run.sh"]
