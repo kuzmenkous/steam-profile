@@ -169,3 +169,4 @@ env/
 # Custom files and directories
 web_dir
 custom.py
+templates
