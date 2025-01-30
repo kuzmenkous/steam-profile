@@ -97,6 +97,16 @@ class ProfileService(BaseService):
         except SQLAlchemyError as e:
             log.exception(e)
 
+    async def get_profile_by_id(self, profile_id: int) -> ProfileShowResponseSchema:
+        try:
+            async with self.uow:
+                profile = await self.uow.profile.get_profile_by_id(profile_id=profile_id)
+                if not profile:
+                    raise ValueError("Profile not found")
+                return ProfileShowResponseSchema.model_validate(profile)
+        except SQLAlchemyError as e:
+            log.exception
+
     async def delete_profile(self, profile_id: int):
         try:
             async with self.uow:

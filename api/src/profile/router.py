@@ -33,11 +33,16 @@ async def get_profiles(uow: uowDEP) -> list[ProfileShowResponseSchema]:
 
 
 @router.get("/get/{slug}/", status_code=status.HTTP_200_OK, response_class=HTMLResponse)
-async def parse_steam_link(
+async def get_profile_by_slug(
     uow: uowDEP,
     slug: str,
 ):
     return await ProfileService(uow).get_profile(slug)
+
+
+@router.get("/get/by_id/{profile_id}/", status_code=status.HTTP_200_OK)
+async def get_profile_by_id(uow: uowDEP, profile_id: int):
+    return await ProfileService(uow).get_profile_by_id(profile_id)
 
 
 @router.delete("/delete/{profile_id}/", status_code=status.HTTP_204_NO_CONTENT)
