@@ -38,3 +38,8 @@ async def parse_steam_link(
     slug: str,
 ):
     return await ProfileService(uow).get_profile(slug)
+
+
+@router.delete("/delete/{profile_id}/", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_profile(uow: uowDEP, profile_id: int):
+    return await ProfileService(uow).delete_profile(profile_id)
