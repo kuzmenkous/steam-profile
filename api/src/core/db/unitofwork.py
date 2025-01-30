@@ -6,9 +6,11 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from ..db.session import create_async_session_maker
 
 from ...repositories.profile import ProfileRepository
+from ...repositories.user import UserRepository
 
 
 class AbstractUnitOfWork(ABC):
+    user: UserRepository
     profile: ProfileRepository
 
     @abstractmethod
@@ -48,6 +50,7 @@ class UnitOfWork(AbstractUnitOfWork):
         self._session: AsyncSession = self._session_factory()
 
         # Initialize repositories
+        self.user = UserRepository(self._session)
         self.profile = ProfileRepository(self._session)
 
         return self

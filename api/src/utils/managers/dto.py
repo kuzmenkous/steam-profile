@@ -16,3 +16,19 @@ class ProfileCreateDataDTO:
 
     def dict(self):
         return {k: str(v) for k, v in asdict(self).items()}
+
+
+@dataclass
+class JWTTokensResponse:
+    access_token: str
+    refresh_token: str
+    token_type: str
+
+    def dict(self):
+        return {k: str(v) for k, v in asdict(self).items()}
+
+
+@dataclass
+class JWTTokenData:
+    user_id: str
+    refresh: bool = False
