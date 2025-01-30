@@ -15,6 +15,7 @@ class AppSettings(BaseSettings):
     secret_key: str
     domain: str = "localhost:8000"
     protocol: str = "http"
+    templates: str = "templates"
 
     class Config:
         env_prefix = "app_"

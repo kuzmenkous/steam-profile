@@ -222,6 +222,11 @@ class Repository(Generic[Model]):
     ) -> Model:
         return await self.get_one_by_attr(attr=self.model.id, value=obj_id, options=options)
 
+    async def exists_by_id(self, obj_id: int | uuid.UUID) -> bool:
+        query = exists().where(self.model.id == obj_id).select()
+        res = await self.session.execute(query)
+        return res.scalar()
+
     async def exists_by_attr(
         self,
         *,

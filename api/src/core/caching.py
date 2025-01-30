@@ -1,5 +1,4 @@
 import redis_cli
-import hashlib
 import asyncio
 import functools
 import pickle

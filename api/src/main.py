@@ -7,6 +7,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from .core.config import settings
 from .core.caching import init_caching
 
+from .profile.router import router as profile_router
+
 
 # Lifespan events
 @asynccontextmanager
@@ -38,6 +40,6 @@ app.mount(
 )
 
 # Include routers
-ROUTERS: list[APIRouter] = []
+ROUTERS: list[APIRouter] = [profile_router]
 for router in ROUTERS:
     app.include_router(router, prefix=f"/api/v{settings.app.version}")
