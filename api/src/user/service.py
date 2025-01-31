@@ -59,7 +59,7 @@ class UserService(BaseService):
     async def get_user_list(self) -> list[UserShowSchema]:
         try:
             async with self.uow:
-                users = await self.uow.user.get_all()
+                users = await self.uow.user.get_list()
                 return [
                     UserShowSchema(id=user.id, email=user.email, is_active=user.is_active)
                     for user in users
