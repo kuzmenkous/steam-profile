@@ -140,7 +140,9 @@ class SteamParseManager:
         # Extract the user's player level
         player_level_tag = soup.find("span", {"class": "friendPlayerLevelNum"})
         if player_level_tag:
-            profile_data["player_level"] = int(player_level_tag.string)
+            profile_data["player_level"] = (
+                int(player_level_tag.string) if player_level_tag.string != "None" else None
+            )
 
         # Write the updated content back to the index.html file
         with open(os.path.join(template_path, "index.html"), "w", encoding="utf-8") as file:
