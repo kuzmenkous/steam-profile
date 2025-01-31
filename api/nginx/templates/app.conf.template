@@ -1,5 +1,5 @@
 upstream steam_profile {
-	server gost_bet:${APP_PORT};
+	server steam_profile:${APP_PORT};
 }
 
 server {
