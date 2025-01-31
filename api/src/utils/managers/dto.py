@@ -7,7 +7,6 @@ from typing import Optional
 class ProfileCreateDataDTO:
     username: str
     avatar_url: str
-    steam_id: Optional[str] = None
     avatar_frame_url: Optional[str] = None
     description: Optional[str] = None
     location: Optional[str] = None
