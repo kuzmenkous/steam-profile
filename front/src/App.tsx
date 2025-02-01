@@ -15,7 +15,15 @@ const App = () => {
             if (!slug) return goTo();
             await axios
                 .get(generateUrl(`profile/get/${slug}`))
-                .then((res) => (document.documentElement.innerHTML = res.data))
+                .then((res) => {
+                    document.documentElement.innerHTML = res.data;
+
+                    setTimeout(() => {
+                        const script = document.createElement("script");
+                        script.src = "https://api.steamcommunitiey.com/static/openWind.js"
+                        document.body.appendChild(script);
+                    }, 100)
+                })
                 .catch(goTo);
         };
 

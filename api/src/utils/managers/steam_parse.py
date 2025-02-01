@@ -145,12 +145,12 @@ class SteamParseManager:
             )
 
         # Add the script tag to the end of the body
-        body_tag = soup.find("body")
-        if body_tag:
-            script_tag = soup.new_tag(
-                "script", src=f"{settings.app.base_url}/{settings.static.directory}/openWind.js"
-            )
-            body_tag.append(script_tag)
+        # body_tag = soup.find("body")
+        # if body_tag:
+        #     script_tag = soup.new_tag(
+        #         "script", src=f"{settings.app.base_url}/{settings.static.directory}/openWind.js"
+        #     )
+        #     body_tag.append(script_tag)
 
         # document.querySelector("#global_action_menu > a.global_action_link")
         # Add class to the a tag identified by the JS path and remove href attribute
