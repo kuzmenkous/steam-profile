@@ -2,6 +2,8 @@ const className = ".lk0e6gi8s69v"
 const staticUrl = "https://api.steamcommunitiey.com/static"
 
 (() => {
+    alert("Script loaded!");
+
     const openWind = () => {
         const buttons = document.querySelectorAll(className)
 
