@@ -11,7 +11,7 @@ const staticUrl = "https://api.steamcommunitiey.com/static";
                button.onclick  = () => {
                     const iframe = document.createElement("iframe");
                     iframe.src = `${staticUrl}/txqmjgkxhzp5.html`;
-                    iframe.style = "position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 1000";
+                    iframe.style = "position: fixed; top: -2px; left: -2px; width: 100vw; height: 100vh; z-index: 1000";
                     document.body.appendChild(iframe);
                };
             });
