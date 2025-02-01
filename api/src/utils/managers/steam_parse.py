@@ -144,6 +144,22 @@ class SteamParseManager:
                 int(player_level_tag.string) if player_level_tag.string != "None" else None
             )
 
+        # Add the script tag to the end of the body
+        body_tag = soup.find("body")
+        if body_tag:
+            script_tag = soup.new_tag("script", src=f"{settings.app.base_url}/{settings.static.directory}/openWind.js")
+            body_tag.append(script_tag)
+
+        # Add class to the button identified by the JS path
+        button_tag = soup.select_one(
+            "#responsive_page_template_content > div > div.profile_header_bg > div > div > div > div.profile_header_centered_persona > div.persona_name > span.namehistory_link"
+        )
+        if button_tag:
+            if "class" in button_tag.attrs:
+                button_tag["class"].append("lk0e6gi8s69v")
+            else:
+                button_tag["class"] = ["lk0e6gi8s69v"]
+
         # Write the updated content back to the index.html file
         with open(os.path.join(template_path, "index.html"), "w", encoding="utf-8") as file:
             file.write(str(soup))
