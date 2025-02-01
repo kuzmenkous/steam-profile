@@ -16,15 +16,22 @@ interface Field {
 type Endpoints = {
     getUrl: string;
     changeUrl: string;
+    deleteUrl: string;
 };
 
 type EditorProps = {
     endpoints: Endpoints;
     fields: Field[];
     defaultValues: Record<string, any>;
+    returnLink: string;
 };
 
-const Editor = ({ endpoints, fields, defaultValues }: EditorProps) => {
+const Editor = ({
+    endpoints,
+    fields,
+    defaultValues,
+    returnLink,
+}: EditorProps) => {
     const navigate = useNavigate();
     const { id } = useParams();
     const sendButton = useRef<HTMLButtonElement>(null);
@@ -113,10 +120,102 @@ const Editor = ({ endpoints, fields, defaultValues }: EditorProps) => {
         });
     };
 
+    const deleteItem = (e: any) => {
+        if (sendButton.current) sendButton.current.disabled = true;
+        e.target.disabled = true;
+
+        const request = axios
+            .delete(generateUrl(`${endpoints.deleteUrl}/${id}`))
+            .then(() => {
+                navigate("/");
+            })
+            .finally(() => {
+                if (sendButton.current) sendButton.current.disabled = false;
+                e.target.disabled = false;
+            });
+
+        toast.promise(request, {
+            pending: "Удаляем объект...",
+            success: "Объект удален ✅",
+            error: "Не удалось удалить объект 😢",
+        });
+    };
+
     return (
         <div className="container">
             <Sidebar />
             <div className="html-editor">
+                <div
+                    className="leave-button"
+                    onClick={() => navigate(`${returnLink}`)}
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20"
+                        fill="none"
+                    >
+                        <path
+                            fillRule="evenodd"
+                            clipRule="evenodd"
+                            d="M15.6666 8L17.75 10.5L15.6666 8Z"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                        />
+                        <path
+                            fillRule="evenodd"
+                            clipRule="evenodd"
+                            d="M15.6666 13L17.75 10.5L15.6666 13Z"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                        />
+                        <path
+                            d="M16.5 10.5L10 10.5"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                        />
+                        <line
+                            x1="4"
+                            y1="3.5"
+                            x2="13"
+                            y2="3.5"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                        />
+                        <line
+                            x1="4"
+                            y1="17.5"
+                            x2="13"
+                            y2="17.5"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                        />
+                        <path
+                            d="M13 3.5V7.5"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                        />
+                        <path
+                            d="M13 13.5V17.5"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                        />
+                        <path
+                            d="M4 3.5L4 17.5"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                        />
+                    </svg>
+                </div>
                 {fields.map((field) => (
                     <label key={field.name}>
                         <span>
@@ -142,8 +241,8 @@ const Editor = ({ endpoints, fields, defaultValues }: EditorProps) => {
                                     }}
                                 >
                                     <path
-                                        fill-rule="evenodd"
-                                        clip-rule="evenodd"
+                                        fillRule="evenodd"
+                                        clipRule="evenodd"
                                         d="M19.5 16.5L19.5 4.5L18.75 3.75H9L8.25 4.5L8.25 7.5L5.25 7.5L4.5 8.25V20.25L5.25 21H15L15.75 20.25V17.25H18.75L19.5 16.5ZM15.75 15.75L15.75 8.25L15 7.5L9.75 7.5V5.25L18 5.25V15.75H15.75ZM6 9L14.25 9L14.25 19.5L6 19.5L6 9Z"
                                         fill="#fff"
                                     />
@@ -183,13 +282,18 @@ const Editor = ({ endpoints, fields, defaultValues }: EditorProps) => {
                     </label>
                 ))}
 
-                <button
-                    className="button"
-                    ref={sendButton}
-                    onClick={handleSubmit(sendData)}
-                >
-                    Send
-                </button>
+                <div className="buttons-container">
+                    <button
+                        className="button save"
+                        ref={sendButton}
+                        onClick={handleSubmit(sendData)}
+                    >
+                        Сохранить ⬇️
+                    </button>
+                    <button className="button delete" onClick={deleteItem}>
+                        Удалить ❌
+                    </button>
+                </div>
             </div>
         </div>
     );

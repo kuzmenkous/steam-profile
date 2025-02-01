@@ -55,6 +55,7 @@ const Auth = () => {
                 fields.length > 0 &&
                 fields.map((field: any) => (
                     <input
+                        key={`${field.name}-${field?.label || "none"}`}
                         {...register(field.name)}
                         placeholder={field.label}
                     />

@@ -42,21 +42,22 @@ const List = ({ url, addUrl, targetValue, navigationPrefix }: ListProps) => {
                         cy="12"
                         r="10"
                         stroke="#fff"
-                        stroke-width="1.5"
+                        strokeWidth="1.5"
                     />
                     <path
                         d="M15 12L12 12M12 12L9 12M12 12L12 9M12 12L12 15"
                         stroke="#fff"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
                     />
                 </svg>
             )}
             <div className="profiles-list">
                 {items &&
                     items.length > 0 &&
-                    items.map((item: any) => (
+                    items.map((item: any, index: number) => (
                         <div
+                            key={`item-${item.id}[${index}]`}
                             className="profile"
                             onClick={() =>
                                 navigate(`${navigationPrefix}/${item.id}`)

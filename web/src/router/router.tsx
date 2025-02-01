@@ -146,9 +146,11 @@ const Router = () => {
                         endpoints={{
                             getUrl: "profile/get/by_id",
                             changeUrl: "profile/update",
+                            deleteUrl: "profile/delete",
                         }}
                         fields={profilesFields}
                         defaultValues={profileDefaultValues}
+                        returnLink="/"
                     />
                 }
             />
@@ -159,16 +161,22 @@ const Router = () => {
                         endpoints={{
                             getUrl: "user/get",
                             changeUrl: "user/update",
+                            deleteUrl: "user/delete",
                         }}
                         fields={userFields}
                         defaultValues={userDefaultValues}
+                        returnLink="/users"
                     />
                 }
             />
             <Route
                 path="/users/create"
                 element={
-                    <Create createUrl="user/create" fields={userCreateFields} />
+                    <Create
+                        createUrl="user/create"
+                        fields={userCreateFields}
+                        returnLink="/users"
+                    />
                 }
             />
             <Route
@@ -177,6 +185,7 @@ const Router = () => {
                     <Create
                         createUrl="profile/create"
                         fields={profilesCreateFields}
+                        returnLink="/"
                     />
                 }
             />

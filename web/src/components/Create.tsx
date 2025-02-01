@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import Sidebar from "../Sidebar";
 import { generateUrl } from "../utils/generateUrl";
 
-const Create = ({ createUrl, fields }: any) => {
+const Create = ({ createUrl, fields, returnLink }: any) => {
     const navigate = useNavigate();
     const sendButton = useRef<any>();
     const { register, handleSubmit } = useForm();
@@ -34,7 +34,7 @@ const Create = ({ createUrl, fields }: any) => {
         await axios
             .post(generateUrl(createUrl), data)
             .then(() => {
-                navigate("/");
+                navigate(returnLink);
                 toast.success("Пользователь был создан успешно ✅");
             })
             .catch(() =>
@@ -87,11 +87,11 @@ const Create = ({ createUrl, fields }: any) => {
                     </label>
                 ))}
                 <button
-                    className="button"
+                    className="button save"
                     ref={sendButton}
                     onClick={handleSubmit(sendData)}
                 >
-                    Send
+                    Создать ➕
                 </button>
             </div>
         </div>
