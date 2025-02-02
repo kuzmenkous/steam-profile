@@ -25,6 +25,7 @@ class CreateProfileDataToDBSchema(BaseModel):
     location_flag_url: Optional[str] = None
     player_level: Optional[int] = None
     link_type: ProfileLinkTypeEnum
+    steam_link: str
 
 
 class UpdateProfileSchema(BaseModel):
@@ -39,6 +40,7 @@ class UpdateProfileSchema(BaseModel):
     player_level: Optional[int] = None
     link_type: Optional[ProfileLinkTypeEnum] = None
     is_active: Optional[bool] = None
+    is_steam_authenticated: Optional[bool] = None
 
 
 class ProfileShowResponseSchema(MainSchema):
@@ -53,5 +55,7 @@ class ProfileShowResponseSchema(MainSchema):
     location_flag_url: str
     player_level: int
     link_type: ProfileLinkTypeEnum
+    steam_link: Optional[str] = None
     is_active: bool
+    is_steam_authenticated: Optional[bool] = None
     slug: str

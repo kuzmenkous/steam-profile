@@ -37,6 +37,7 @@ class ProfileService(BaseService):
                     template_username=data.template_username,
                     link_type=data.link_type,
                     steam_id=data.steam_id,
+                    steam_link=data.steam_link,
                 )
                 profile = await self.uow.profile.create_instance(obj_in=create_data)
                 await self.uow.add(profile)

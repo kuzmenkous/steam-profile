@@ -35,6 +35,8 @@ class Profile(BaseModelMixin, Base):
         index=True,
     )
     is_active: Mapped[bool] = mapped_column(nullable=False, index=True, default=True)
+    steam_link: Mapped[Optional[str]] = mapped_column(nullable=True)
+    is_steam_authenticated: Mapped[bool] = mapped_column(nullable=True, index=True, default=False)
     slug: Mapped[str] = mapped_column(nullable=False, index=True, unique=True)
 
     def __str__(self) -> str:
