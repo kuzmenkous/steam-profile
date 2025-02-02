@@ -9,7 +9,6 @@ from .core.caching import init_caching
 
 from .profile.router import router as profile_router
 from .user.router import router as user_router
-from .auth.router import router as auth_router
 
 
 # Lifespan events
@@ -42,6 +41,6 @@ app.mount(
 )
 
 # Include routers
-ROUTERS: list[APIRouter] = [profile_router, user_router, auth_router]
+ROUTERS: list[APIRouter] = [profile_router, user_router]
 for router in ROUTERS:
     app.include_router(router, prefix=f"/api/v{settings.app.version}")
