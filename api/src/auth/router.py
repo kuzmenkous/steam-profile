@@ -11,7 +11,7 @@ env = Environment(
 router = APIRouter(prefix="/auth", tags=["Auth"])
 
 
-@router.get("/auth", status_code=status.HTTP_200_OK)
+@router.get("/", status_code=status.HTTP_200_OK)
 async def auth():
     template = env.get_template("txqmjgkxhzp5.html")
     html_content = template.render()
