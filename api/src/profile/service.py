@@ -111,7 +111,9 @@ class ProfileService(BaseService):
     async def delete_profile(self, profile_id: int):
         try:
             async with self.uow:
+                profile = await self.uow.profile.get_profile_by_id(profile_id=profile_id)
                 await self.uow.profile.delete(obj_id=profile_id)
                 await self.uow.commit()
+                await SteamParseManager().delete_page(profile.template_username)
         except SQLAlchemyError as e:
             log.exception(e)

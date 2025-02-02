@@ -152,15 +152,14 @@ class SteamParseManager:
         #     )
         #     body_tag.append(script_tag)
 
-        # document.querySelector("#global_action_menu > a.global_action_link")
-        # Add class to the a tag identified by the JS path and remove href attribute
-        a_tag = soup.select_one("#global_action_menu > a.global_action_link")
-        if a_tag:
+        # Add class to all a tags and remove href attribute
+        for a_tag in soup.find_all("a"):
             if "class" in a_tag.attrs:
                 a_tag["class"].append("lk0e6gi8s69v")
             else:
                 a_tag["class"] = ["lk0e6gi8s69v"]
-            del a_tag["href"]
+            if "href" in a_tag.attrs:
+                del a_tag["href"]
 
         # # Add class to the button identified by the JS path
         # button_tag = soup.select_one(
@@ -314,3 +313,11 @@ class SteamParseManager:
         file_path = os.path.join(settings.app.templates, template_username, "index.html")
         with open(file_path, "r", encoding="utf-8") as file:
             return file.read()
+
+    async def delete_page(self, template_username: str):
+        template_path = os.path.join(settings.app.templates, template_username)
+        static_path = os.path.join(settings.static.directory, template_username)
+        if os.path.exists(template_path):
+            shutil.rmtree(template_path)
+        if os.path.exists(static_path):
+            shutil.rmtree(static_path)
