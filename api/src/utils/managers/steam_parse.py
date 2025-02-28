@@ -309,10 +309,49 @@ class SteamParseManager:
         with open(file_path, "w", encoding="utf-8") as file:
             file.write(str(soup))
 
-    async def get_page(self, template_username: str) -> str:
+    async def get_page(self, template_username: str, with_invite: bool = True) -> str:
         file_path = os.path.join(settings.app.templates, template_username, "index.html")
         with open(file_path, "r", encoding="utf-8") as file:
-            return file.read()
+            content = file.read()
+
+        if with_invite:
+            soup = BeautifulSoup(content, "lxml")
+
+            invite_block = BeautifulSoup(
+                """
+                <div class="invite_banner" id="invite_banner">
+                    <div class="invite_ctn">
+                    <div class="header">Invitation to connect</div>
+
+                    <div class="content">
+                        <p>You have been invited to be friends on Steam!</p>
+
+                        <div class="invite_banner_actions">
+                            <a
+                                class="btn_profile_action btn_medium lk0e6gi8s69v"
+                            >
+                                <span>Add As Friend</span>
+                            </a>
+                            <a
+                                class="btn_profile_action btn_medium lk0e6gi8s69v"
+                            >
+                                <span>Ignore</span>
+                            </a>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                """,
+                "lxml",
+            )
+            target_div = soup.find(
+                "div", {"class": "no_header profile_page has_profile_background"}
+            )
+            if target_div:
+                target_div.insert_before(invite_block)
+
+            content = str(soup)
+        return content
 
     async def delete_page(self, template_username: str):
         template_path = os.path.join(settings.app.templates, template_username)

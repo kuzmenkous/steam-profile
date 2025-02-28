@@ -59,3 +59,4 @@ class ProfileShowResponseSchema(MainSchema):
     is_active: bool
     is_steam_authenticated: Optional[bool] = None
     slug: str
+    invite_link_path: Optional[str] = None

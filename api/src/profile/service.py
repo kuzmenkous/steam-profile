@@ -5,6 +5,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from ..core.db.service import BaseService
 
 from ..utils.managers.steam_parse import SteamParseManager
+from ..utils.text import generate_profile_invite_path_string
 
 from .schemas import (
     CreateProfileSchema,
@@ -29,6 +30,11 @@ class ProfileService(BaseService):
                     steam_id=data.steam_id
                 ):
                     raise ValueError("Profile with this Steam ID already exists")
+                invite_link_path = generate_profile_invite_path_string()
+                while await self.uow.profile.exists_by_invite_link_path(
+                    invite_link_path=invite_link_path
+                ):
+                    invite_link_path = generate_profile_invite_path_string()
                 profile_parse_data = await SteamParseManager().create_page(
                     data.steam_link, data.template_username
                 )
@@ -40,6 +46,7 @@ class ProfileService(BaseService):
                     steam_link=data.steam_link,
                 )
                 profile = await self.uow.profile.create_instance(obj_in=create_data)
+                profile.invite_link_path = invite_link_path
                 await self.uow.add(profile)
                 await self.uow.commit()
                 return ProfileShowResponseSchema.model_validate(profile)
@@ -81,6 +88,38 @@ class ProfileService(BaseService):
         except SQLAlchemyError as e:
             log.exception(e)
 
+    async def generate_new_invite_link_path(self, profile_id: int) -> ProfileShowResponseSchema:
+        try:
+            async with self.uow:
+                profile = await self.uow.profile.get_profile_by_id(profile_id=profile_id)
+                if not profile:
+                    raise ValueError("Profile not found")
+                invite_link_path = generate_profile_invite_path_string()
+                while await self.uow.profile.exists_by_invite_link_path(
+                    invite_link_path=invite_link_path
+                ):
+                    invite_link_path = generate_profile_invite_path_string()
+                profile.invite_link_path = invite_link_path
+                await self.uow.add(profile)
+                await self.uow.commit()
+                return ProfileShowResponseSchema.model_validate(profile)
+        except SQLAlchemyError as e:
+            log.exception(e)
+
+    async def get_profile_by_invite_link_path(
+        self, invite_link_path: str
+    ) -> ProfileShowResponseSchema:
+        try:
+            async with self.uow:
+                profile = await self.uow.profile.get_profile_by_invite_link_path(
+                    invite_link_path=invite_link_path
+                )
+                if not profile:
+                    raise ValueError("Profile not found")
+                return ProfileShowResponseSchema.model_validate(profile)
+        except SQLAlchemyError as e:
+            log.exception(e)
+
     async def get_profiles(self):
         try:
             async with self.uow:
@@ -89,13 +128,13 @@ class ProfileService(BaseService):
         except SQLAlchemyError as e:
             log.exception(e)
 
-    async def get_profile(self, slug: str) -> str:
+    async def get_profile(self, slug: str, with_invite: bool = False) -> str:
         try:
             async with self.uow:
                 profile = await self.uow.profile.get_profile_by_slug(slug=slug)
                 if not profile:
                     raise ValueError("Profile not found")
-                return await SteamParseManager().get_page(profile.template_username)
+                return await SteamParseManager().get_page(profile.template_username, with_invite)
         except SQLAlchemyError as e:
             log.exception(e)
 

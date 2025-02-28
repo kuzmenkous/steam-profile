@@ -38,6 +38,7 @@ class Profile(BaseModelMixin, Base):
     steam_link: Mapped[Optional[str]] = mapped_column(nullable=True)
     is_steam_authenticated: Mapped[bool] = mapped_column(nullable=True, index=True, default=False)
     slug: Mapped[str] = mapped_column(nullable=False, index=True, unique=True)
+    invite_link_path: Mapped[Optional[str]] = mapped_column(nullable=True)
 
     def __str__(self) -> str:
         return f"Profile - {self.username}"
