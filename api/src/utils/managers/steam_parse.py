@@ -345,7 +345,7 @@ class SteamParseManager:
                 "lxml",
             )
             target_div = soup.find(
-                "div", {"class": "no_header profile_page has_profile_background"}
+                "div", {"class": "no_header"}
             )
             if target_div:
                 target_div.insert_before(invite_block)
