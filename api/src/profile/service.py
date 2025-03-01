@@ -116,7 +116,7 @@ class ProfileService(BaseService):
                 )
                 if not profile:
                     raise ValueError("Profile not found")
-                return SteamParseManager().get_page(profile.template_username, with_invite=True)
+                return await SteamParseManager().get_page(profile.template_username, with_invite=True)
         except SQLAlchemyError as e:
             log.exception(e)
 
