@@ -44,7 +44,7 @@ async def get_profiles(uow: uowDEP) -> list[ProfileShowResponseSchema]:
     return await ProfileService(uow).get_profiles()
 
 
-@router.get("/get/by_invite_link_path/", status_code=status.HTTP_200_OK)
+@router.get("/get/by_invite_link_path/", status_code=status.HTTP_200_OK, response_class=HTMLResponse)
 async def get_profile_by_invite_link_path(
     uow: uowDEP,
     invite_link_path: str,
