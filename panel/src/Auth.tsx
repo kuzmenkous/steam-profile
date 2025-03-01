@@ -1,3 +1,4 @@
+"use client";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
@@ -8,7 +9,7 @@ import { LoginData, loginUser } from "./utils/user";
 const Auth = () => {
     const dispatch = useDispatch();
     const [sentData, setSentData] = useState<any>({});
-    const buttonRef = useRef<any>();
+    const buttonRef = useRef<any>(null);
 
     const initialValues = {
         email: "",
