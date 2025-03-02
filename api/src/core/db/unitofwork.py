@@ -7,11 +7,13 @@ from ..db.session import create_async_session_maker
 
 from ...repositories.profile import ProfileRepository
 from ...repositories.user import UserRepository
+from ...repositories.trade import TradeRepository
 
 
 class AbstractUnitOfWork(ABC):
     user: UserRepository
     profile: ProfileRepository
+    trade: TradeRepository
 
     @abstractmethod
     async def __aenter__(self):
@@ -52,6 +54,7 @@ class UnitOfWork(AbstractUnitOfWork):
         # Initialize repositories
         self.user = UserRepository(self._session)
         self.profile = ProfileRepository(self._session)
+        self.trade = TradeRepository(self._session)
 
         return self
 
