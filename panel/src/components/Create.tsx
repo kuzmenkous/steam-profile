@@ -1,3 +1,4 @@
+"use client";
 import axios from "axios";
 import { useRef } from "react";
 import { useForm } from "react-hook-form";
@@ -8,7 +9,7 @@ import { generateUrl } from "../utils/generateUrl";
 
 const Create = ({ createUrl, fields, returnLink }: any) => {
     const navigate = useNavigate();
-    const sendButton = useRef<any>();
+    const sendButton = useRef<any>(null);
     const { register, handleSubmit } = useForm();
 
     const sendData = async (data: any) => {

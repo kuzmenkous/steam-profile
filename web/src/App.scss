@@ -1,6 +1,4 @@
-* {
-    font-family: sans-serif;
-}
+@import url("https://fonts.googleapis.com/css2?family=Jacquard+24&display=swap");
 
 html,
 body,
@@ -11,319 +9,53 @@ body,
     overflow-x: hidden;
     padding: 0;
     margin: 0;
-    background: #181818;
-    color: #fff;
 }
 
-.container {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: flex-start;
-}
-
-.auth-modal {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 100%;
-    max-width: 500px;
-    height: 300px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    gap: 25px;
-    border: 1px solid #fff;
-    border-radius: 16px;
-    transform: translate(-50%, -50%);
-}
-
-.html-editor {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding: 25px;
-    box-sizing: border-box;
-
-    .leave-button {
-        position: absolute;
-        width: 50px;
-        height: 50px;
-        top: 25px;
-        left: 25px;
-        display: grid;
-        place-content: center;
-        border-radius: 6px;
-        border: 1px solid #fff;
-        cursor: pointer;
-        background-color: #181818;
-        transition: 0.3s;
-        z-index: 3;
-
-        svg {
-            width: 25px;
-        }
-
-        &:active {
-            background: #fff;
-            color: #000;
-            border-color: #000;
-        }
-    }
-
-    label {
-        position: relative;
-        width: 100%;
-        max-width: 400px;
-        display: flex;
-        flex-direction: column;
-        margin-bottom: 15px;
-        gap: 5px;
-
-        &:last-of-type {
-            margin-bottom: 40px;
-        }
-
-        span {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-    }
-}
-
-.button {
-    --primary-color: #fff;
-    --secondary-color: #000;
-    width: 100%;
-    max-width: 200px;
-    height: 35px;
-    background: transparent;
-    border: 1px solid var(--primary-color);
-    color: var(--primary-color);
-    border-radius: 6px;
-    cursor: pointer;
-    outline: none;
-    flex-shrink: 0;
-    transition: 0.3s;
-
-    &:active {
-        background: var(--primary-color);
-        color: var(--secondary-color);
-        border-color: var(--secondary-color);
-    }
-
-    &.delete {
-        --primary-color: hsl(6, 78%, 57%);
-    }
-
-    &.save {
-        --primary-color: #07bc0c;
-    }
-}
-
-.buttons-container {
-    width: 100%;
-    max-width: 550px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-}
-
-input,
-select {
-    &:not([type="checkbox"]) {
-        width: 100%;
-        max-width: 400px;
-        height: 40px;
-        color: #fff;
-        border: 1px solid #fff;
-        background: transparent;
-        border-radius: 6px;
-        padding-left: 8px;
-        box-sizing: border-box;
-        outline: none;
-        transition: 0.3s;
-
-        &:not(select):focus,
-        &:is(select):active {
-            background: #fff;
-            color: #000;
-            border-color: #000;
-        }
-    }
-
-    &[type="checkbox"] {
-        width: max-content;
-    }
-}
-
-.profiles-list {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 25px;
-    margin-top: 25px;
-
+.inner {
     &-container {
         width: 100%;
         height: 100%;
-        padding: 20px;
-        box-sizing: border-box;
-        overflow-y: auto;
-    }
-
-    .profile {
-        width: 200px;
-        height: 50px;
         display: flex;
         align-items: center;
         justify-content: center;
-        border: 1px solid #fff;
-        background: transparent;
-        border-radius: 6px;
-        cursor: pointer;
-        overflow: hidden;
-        padding: 5px;
-        box-sizing: border-box;
-        transition: 0.3s;
-
-        &:active {
-            background: #fff;
-            color: #000;
-            border-color: #000;
-        }
-    }
-}
-
-.sidebar {
-    width: 300px;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-    padding: 20px;
-    box-sizing: border-box;
-    border-right: 1px solid #fff;
-    z-index: 2;
-}
-
-@media (max-width: 780px) {
-    .sidebar {
-        position: absolute;
-        width: 100%;
-        max-width: 100%;
-        left: -150%;
-        border: none;
+        flex-direction: column;
+        font-family: "Jacquard 24", system-ui;
+        color: #fff;
         background: #181818;
-        transition: 0.3s;
-
-        &-mobile-button {
-            position: absolute;
-            width: 50px;
-            height: 50px;
-            display: grid;
-            place-content: center;
-            border-radius: 0 6px 6px 0;
-            border: 1px solid #fff;
-            background-color: #181818;
-            top: 50%;
-            left: 0;
-            transform: translateY(-50%);
-            cursor: pointer;
-            transition: 0.3s;
-            z-index: 3;
-
-            svg {
-                width: 25px;
-            }
-
-            &:active {
-                background: #fff;
-                color: #000;
-                border-color: #000;
-            }
-
-            &.active {
-                left: unset;
-                right: 0;
-                border-radius: 6px 0 0 6px;
-                background: #fff;
-                color: #000;
-                border-color: #000;
-
-                svg {
-                    transform: rotate(180deg);
-                }
-            }
-        }
-
-        &.active {
-            left: 0;
-        }
     }
 
-    .html-editor {
-        .leave-button {
-            top: 0;
-            left: 0;
-            border-radius: 0 0 6px 0;
-        }
-
-        label {
-            max-width: 300px;
-        }
+    &-content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 50px;
     }
 
-    .profiles-list .profile {
-        justify-content: flex-start;
-    }
-}
-
-@media (max-width: 700px) {
-    .auth-modal {
+    &-image {
         max-width: 100%;
-        position: static;
-        transform: none;
-    }
-}
+        max-height: 100%;
 
-@media (hover: hover) {
-    .button:hover {
-        background: var(--primary-color);
-        color: var(--secondary-color);
-        border-color: var(--secondary-color);
-    }
+        &-wrapper {
+            width: 200px;
+            height: 200px;
+            background-color: #fff;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
 
-    .profiles-list .profile:hover {
-        background: #fff;
-        color: #000;
-        border-color: #000;
-    }
-
-    select:hover {
-        background: #fff;
-        color: #000;
-        border-color: #000;
+            &:hover {
+                background-color: #e2e2e2;
+            }
+        }
     }
 
-    .sidebar-mobile-button:hover {
-        background: #fff;
-        color: #000;
-        border-color: #000;
+    &-span {
+        font-size: 100px;
     }
 
-    .html-editor .leave-button:hover {
-        background: #fff;
-        color: #000;
-        border-color: #000;
+    &-p {
+        font-size: 80px;
     }
 }

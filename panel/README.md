@@ -1,4 +1,4 @@
-# front (1.0.0)
+# test-steam-panel (1.0.0)
 
 ## Available Scripts
 

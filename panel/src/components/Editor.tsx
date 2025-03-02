@@ -1,3 +1,4 @@
+"use client";
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -36,6 +37,7 @@ const Editor = ({
     const { id } = useParams();
     const sendButton = useRef<HTMLButtonElement>(null);
     const [initialValues, setInitialValues] = useState(defaultValues);
+    const [generatingLink, setGeneratingLink] = useState(false);
 
     useEffect(() => {
         const getInitialValues = async () => {
@@ -72,9 +74,14 @@ const Editor = ({
         getInitialValues();
     }, [id, endpoints]);
 
-    const { register, handleSubmit, getValues } = useForm<any>({
-        values: initialValues,
-    });
+    const { register, handleSubmit, getValues, setValue, watch } = useForm<any>(
+        {
+            values: initialValues,
+        }
+    );
+
+    const inviteLinkPath = watch("invite_link_path");
+    const slug = watch("slug");
 
     const sendData = (data: any) => {
         const pushedData = { ...data };
@@ -140,6 +147,42 @@ const Editor = ({
             error: "Не удалось удалить объект 😢",
         });
     };
+
+    const generateFiendInvite = async () => {
+        if (generatingLink) return;
+
+        setGeneratingLink(true);
+
+        const request = axios
+            .post(generateUrl(`profile/invite_link_path/generate/${id}`))
+            .finally(() => setGeneratingLink(false));
+
+        toast.promise(request, {
+            pending: "Генерируем ссылку...",
+            success: "Ссылка сгенерирована ✅",
+            error: "Не удалось сгенерировать ссылку 😢",
+        });
+
+        const response = await request;
+
+        if (response.data.invite_link_path)
+            setValue("invite_link_path", response.data.invite_link_path);
+    };
+
+    useEffect(() => {
+        const mainPart =
+            process.env.REACT_APP_FRIEND_INVITE_LINK ||
+            "http://localhost:3000/p/";
+        if (inviteLinkPath && !inviteLinkPath.includes(mainPart))
+            setValue("invite_link_path", `${mainPart}${inviteLinkPath}`);
+    }, [inviteLinkPath]);
+
+    useEffect(() => {
+        const mainPart =
+            process.env.REACT_APP_SLUG_LINK || "http://localhost:3000/id/";
+        if (slug && !slug.includes(mainPart))
+            setValue("slug", `${mainPart}${slug}`);
+    }, [slug]);
 
     return (
         <div className="container">
@@ -220,7 +263,8 @@ const Editor = ({
                     <label key={field.name}>
                         <span>
                             {field.label}{" "}
-                            {field.name === "slug" && (
+                            {(field.name === "slug" ||
+                                field.name === "invite_link_path") && (
                                 <svg
                                     style={{ cursor: "pointer" }}
                                     xmlns="http://www.w3.org/2000/svg"
@@ -229,11 +273,7 @@ const Editor = ({
                                     fill="none"
                                     onClick={() => {
                                         navigator.clipboard.writeText(
-                                            `${
-                                                process.env
-                                                    .REACT_APP_SLUG_LINK ||
-                                                "http://localhost:3001/id/"
-                                            }${getValues()[field.name]}`
+                                            getValues()[field.name]
                                         );
                                         toast.success(
                                             "Вы скопировали ссылку ✅"
@@ -272,6 +312,35 @@ const Editor = ({
                                     С Steam ID
                                 </option>
                             </select>
+                        ) : field.name === "invite_link_path" ? (
+                            <>
+                                <input
+                                    {...register(field.name)}
+                                    placeholder={
+                                        field.placeholder || field.label
+                                    }
+                                    readOnly={true}
+                                />
+
+                                <button
+                                    disabled={generatingLink}
+                                    onClick={generateFiendInvite}
+                                    className="button"
+                                >
+                                    Сгенерировать новую ссылку
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="currentColor"
+                                        width="15px"
+                                        viewBox="0 0 1920 1920"
+                                    >
+                                        <path
+                                            d="M960 0v112.941c467.125 0 847.059 379.934 847.059 847.059 0 467.125-379.934 847.059-847.059 847.059-467.125 0-847.059-379.934-847.059-847.059 0-267.106 126.607-515.915 338.824-675.727v393.374h112.94V112.941H0v112.941h342.89C127.058 407.38 0 674.711 0 960c0 529.355 430.645 960 960 960s960-430.645 960-960S1489.355 0 960 0"
+                                            fill-rule="evenodd"
+                                        />
+                                    </svg>
+                                </button>
+                            </>
                         ) : (
                             <input
                                 {...register(field.name)}

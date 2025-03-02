@@ -5,8 +5,8 @@ const Sidebar = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const [currentWidth, setCurrentWidth] = useState(window.innerWidth);
-    const sidebarRef = useRef<any>();
-    const mobileButtonRef = useRef<any>();
+    const sidebarRef = useRef<any>(null);
+    const mobileButtonRef = useRef<any>(null);
 
     const toggleNavbar = (mode = "toggle") => {
         sidebarRef.current?.classList[mode]("active");
