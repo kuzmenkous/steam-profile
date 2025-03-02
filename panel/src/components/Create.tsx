@@ -30,8 +30,6 @@ const Create = ({ createUrl, fields, returnLink }: any) => {
 
         if (isError) return toast.error("Введите все необходимые данные");
 
-        console.log(data);
-
         await axios
             .post(generateUrl(createUrl), data)
             .then(() => {

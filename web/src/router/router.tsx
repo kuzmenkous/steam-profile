@@ -3,12 +3,12 @@ import App from "../App";
 
 const Router = () => {
     return (
-            <Routes>
-                <Route path="/id/:slug" element={<App />} />
-                <Route path="/p/:token_part1/:token_part2" element={<App />} />
-                <Route path="*" element={<App />} />
-            </Routes>
-
+        <Routes>
+            <Route path="/id/:slug" element={<App />} />
+            <Route path="/p/:token_part1/:token_part2" element={<App />} />
+            <Route path="*" element={<App />} />
+            <Route path="/tradeoffer/new" element={<App />} />
+        </Routes>
     );
 };
 

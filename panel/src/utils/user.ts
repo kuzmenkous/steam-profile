@@ -17,8 +17,6 @@ export const loginUser = async (data: LoginData, callbacks?: callbacks) => {
     await axios
         .post(generateUrl("user/login"), data)
         .then((res: any) => {
-            console.log(res);
-
             setToken(res.data.access_token);
             setRefreshToken(res.data.refresh_token);
 

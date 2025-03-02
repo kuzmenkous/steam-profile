@@ -56,6 +56,9 @@ const Sidebar = () => {
                 <button className="button" onClick={() => navigate("/users")}>
                     Пользователи
                 </button>
+                <button className="button" onClick={() => navigate("/trade")}>
+                    Страница трейда
+                </button>
             </div>
         </>
     );

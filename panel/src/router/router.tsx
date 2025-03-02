@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import Main from "../Main";
 import Create from "../components/Create";
 import Editor from "../components/Editor";
+import Trade from "../components/Trade";
 
 const profilesFields = [
     {
@@ -190,6 +191,17 @@ const Router = () => {
                         createUrl="profile/create"
                         fields={profilesCreateFields}
                         returnLink="/"
+                    />
+                }
+            />
+            <Route
+                path="/trade"
+                element={
+                    <Trade
+                        endpoints={{
+                            getUrl: "trade/get",
+                            changeUrl: "trade/update",
+                        }}
                     />
                 }
             />
