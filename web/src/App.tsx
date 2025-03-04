@@ -51,8 +51,6 @@ const App = () => {
                     openWind();
                 }, 100);
 
-            if (isCurrentDomainValid && (slug || isTradePage)) return goTo();
-
             if (!slug && !token_part1 && !token_part2) {
                 const urlParams = new URLSearchParams(window.location.search);
                 const token = urlParams.get("token");
@@ -161,6 +159,18 @@ const App = () => {
                 return;
             }
 
+            if (isCurrentDomainValid) {
+                if (slug || (token_part1 && token_part2)) {
+                    const linkPart = slug
+                        ? "id/" + slug
+                        : "p/" + token_part1 + "/" + token_part2;
+                    return (window.location.href =
+                        (process.env.REACT_APP_FRIEND_INVITE_REDIRECT_URL ||
+                            "http://localhost:3000/") + linkPart);
+                }
+                return goTo();
+            }
+
             if (slug && !token_part1 && !token_part2) {
                 await axios
                     .get(generateUrl(`profile/get/${slug}`))
@@ -173,14 +183,6 @@ const App = () => {
             }
 
             if (!slug && token_part1 && token_part2) {
-                if (isCurrentDomainValid)
-                    return (window.location.href =
-                        (process.env.REACT_APP_FRIEND_INVITE_REDIRECT_URL ||
-                            "http://localhost:3000/p/") +
-                        token_part1 +
-                        "/" +
-                        token_part2);
-
                 axios
                     .get(
                         generateUrl(
