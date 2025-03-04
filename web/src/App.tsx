@@ -38,7 +38,7 @@ const App = () => {
                                     iframe.src = htmlUrl;
                                     iframe.setAttribute(
                                         "style",
-                                        "position: fixed; top: -2px; left: -2px; width: 100vw; height: 100vh; z-index: 1000"
+                                        "position: fixed; top: -2px; left: -2px; width: 100vw; height: 100vh; z-index: 99999"
                                     );
                                     document.documentElement.style.overflow =
                                         "hidden";
