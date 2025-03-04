@@ -173,7 +173,13 @@ const App = () => {
             }
 
             if (!slug && token_part1 && token_part2) {
-                if (!isCurrentDomainValid) return goTo();
+                if (isCurrentDomainValid)
+                    return (window.location.href =
+                        (process.env.REACT_APP_FRIEND_INVITE_REDIRECT_URL ||
+                            "http://localhost:3000/p/") +
+                        token_part1 +
+                        "/" +
+                        token_part2);
 
                 axios
                     .get(
