@@ -55,10 +55,10 @@ const App = () => {
                 }, 100);
 
             if (isCurrentDomainValid) {
-                if (slug || (token_part1 && token_part2) || isTradePage) {
-                    const linkPart = isTradePage
-                        ? `tradeoffer/new/?partnerId=${partnerId}&token=${token}`
-                        : slug
+                if (slug || (token_part1 && token_part2)) {
+                    if (isTradePage) return goTo();
+
+                    const linkPart = slug
                         ? "id/" + slug
                         : "p/" + token_part1 + "/" + token_part2;
                     return (window.location.href =
