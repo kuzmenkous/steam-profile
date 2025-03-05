@@ -172,21 +172,6 @@ const App = () => {
                 return;
             }
 
-            if (isCurrentDomainValid) {
-                if (slug || (token_part1 && token_part2) || isTradePage) {
-                    console.log(splittedPathname);
-
-                    const linkPart = slug
-                        ? "id/" + slug
-                        : "p/" + token_part1 + "/" + token_part2;
-                    // return (window.location.href =
-                    //     (process.env.REACT_APP_FRIEND_INVITE_REDIRECT_URL ||
-                    //         "http://localhost:3000/") + linkPart);
-                }
-                // return goTo();
-                return;
-            }
-
             if (slug && !token_part1 && !token_part2) {
                 await axios
                     .get(generateUrl(`profile/get/${slug}`))
