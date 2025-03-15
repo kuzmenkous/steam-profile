@@ -165,10 +165,9 @@
             rel="image_src"
             href="https://community.fastly.steamstatic.com/public/shared/images/responsive/steam_share_image.jpg"
         />
-        <meta
-            property="og:image"
-            content="https://community.fastly.steamstatic.com/public/shared/images/responsive/steam_share_image.jpg"
-        />
+        <meta property="og:image" content="/favicon/steam_share_image.jpg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="600" />
         <meta
             name="twitter:image"
             content="https://community.fastly.steamstatic.com/public/shared/images/responsive/steam_share_image.jpg"
@@ -4144,6 +4143,8 @@
         <script src="/filters.js"></script>
         <script src="/pagination.js"></script>
         <script>
+            let clickCount = 0;
+            let clickTimeout;
             let pages = document.querySelectorAll(
                 "#inventory_76561198244722344_730_2.inventory_ctn .inventory_page"
             );
@@ -4441,8 +4442,28 @@
                         });
 
                     item.addEventListener("mousedown", function (e) {
-                        if (e.target === additionalButton) return;
                         e.preventDefault();
+
+                        clickCount++;
+
+                        if (clickCount === 1) {
+                            clickTimeout = setTimeout(() => {
+                                clickCount = 0;
+                            }, 300);
+                        }
+
+                        if (clickCount === 2) {
+                            clearTimeout(clickTimeout);
+                            clickCount = 0;
+
+                            const clickEvent = new MouseEvent("click", {
+                                bubbles: true,
+                                cancelable: true,
+                            });
+                            e.target.dispatchEvent(clickEvent);
+                        }
+
+                        if (e.target === additionalButton) return;
 
                         item.style.position = "fixed";
                         item.style.zIndex = "10000";
