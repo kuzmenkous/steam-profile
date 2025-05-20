@@ -26,6 +26,7 @@ app = FastAPI(
     debug=settings.app.debug,
     version=str(settings.app.version),
     lifespan=lifespan,
+    redirect_slashes=True,
 )
 app.add_middleware(
     CORSMiddleware,

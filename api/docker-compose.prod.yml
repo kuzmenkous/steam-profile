@@ -22,7 +22,7 @@ services:
     depends_on:
       - postgresql
     ports:
-      - "8000:${APP_PORT}"
+      - "${APP_PORT}:${APP_PORT}"
     volumes:
       - .:/steam_profile_app/api
       - ./static:/steam_profile_app/api/static
